@@ -9,7 +9,13 @@ dropdb :
 migrateup:
 	sudo migrate -path db/migration -database "postgres://postgres:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
+migratedown:
+	sudo migrate -path db/migration -database "postgres://postgres:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
+
 sqlc:
-	 sqlc generate
+	sqlc generate
+
+test:
+	go test -v -cover ./...
 
 .PHONY : postgres createdb dropdb 
