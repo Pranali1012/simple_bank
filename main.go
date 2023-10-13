@@ -10,8 +10,9 @@ import (
 )
 
 const (
-	dbDriver = "postgres"
-	dbSource = "postgres://postgres:secret@localhost:5432/simple_bank?sslmode=disable"
+	dbDriver      = "postgres"
+	dbSource      = "postgres://postgres:secret@localhost:5432/simple_bank?sslmode=disable"
+	serverAddress = "0.0.0.0:8080"
 )
 
 func main() {
@@ -22,12 +23,17 @@ func main() {
 	}
 	defer conn.Close()
 
-	if err = conn.Ping(); err != nil {
-		log.Fatal(err)
-	}
+	// if err = conn.Ping(); err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	store := db.NewStore(conn)
-	server := api.newServer
+	server := api.newServer(store)
+
+	err = server.Start(serverAddress)
+	if err != nil {
+
+	}
 
 	//Creating an instance of a Queries struct from sqlc package
 	//queries := sqlc.New(conn)
