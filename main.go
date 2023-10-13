@@ -1,12 +1,12 @@
 package main
 
 import (
-	"context"
 	"database/sql"
 	"log"
 
+	db "github.com/pranali1012/simple_bank/db/sqlc"
+
 	_ "github.com/lib/pq"
-	"github.com/pranali1012/simple_bank/db/sqlc"
 )
 
 const (
@@ -26,8 +26,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	store := db.NewStore(conn)
+	server := api.newServer
+
 	//Creating an instance of a Queries struct from sqlc package
-	queries := sqlc.New(conn)
+	//queries := sqlc.New(conn)
 
 	// //To create an account
 	// //Creating an instance of a CreateAccountParams struct from sqlc package
@@ -94,17 +97,17 @@ func main() {
 
 	// //To update an entry
 	// //Creating an instance of a UpdateEntryParams struct from sqlc package
-	updateEntryParams := sqlc.UpdateEntryParams{ID: 5, Amount: 0}
+	// updateEntryParams := sqlc.UpdateEntryParams{ID: 5, Amount: 0}
 
-	updatedEntry, err := queries.UpdateEntry(context.Background(), updateEntryParams)
-	if err != nil {
-		panic(err)
-	}
-	if updatedEntry.Amount == 0 {
-		err = queries.DeleteAccount(context.Background(), 5)
-		if err != nil {
-			panic(err)
-		}
-	}
+	// updatedEntry, err := queries.UpdateEntry(context.Background(), updateEntryParams)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// if updatedEntry.Amount == 0 {
+	// 	err = queries.DeleteAccount(context.Background(), 5)
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+	// }
 
 }
