@@ -3,7 +3,7 @@ package api
 import (
 	"testing"
 
-	"github.com/pranali1012/simple_bank/db"
+	db "github.com/pranali1012/simple_bank/db/sqlc"
 )
 
 func TestGetAccountAPI(t *testing.T) {
