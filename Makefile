@@ -6,6 +6,9 @@ createdb :
 dropdb :
 	docker exec -it postgres16 dropdb simple_bank
 
+migratecreate:
+	migrate create -ext sql -dir db/migration -seq init_schema
+
 migrateup:
 	sudo migrate -path db/migration -database "postgres://postgres:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
 

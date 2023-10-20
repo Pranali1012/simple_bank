@@ -48,7 +48,7 @@ func (server *Server) getAccount(ctx *gin.Context) {
 	account, err := server.store.GetAccount(ctx, req.ID)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			ctx.JSON(http.StatusBadRequest, errResponse(err))
+			ctx.JSON(http.StatusNotFound, errResponse(err))
 			return
 		}
 
@@ -72,7 +72,7 @@ func (server *Server) listAccount(ctx *gin.Context) {
 	}
 
 	arg := db.ListAccountsParams{
-		Limit: req.PageSize,
+		Limit:  req.PageSize,
 		Offset: (req.PageID - 1) * req.PageSize,
 	}
 	accounts, err := server.store.ListAccounts(ctx, arg)

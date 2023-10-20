@@ -1,4 +1,4 @@
-package sqlc
+package db
 
 import (
 	"context"
@@ -11,7 +11,7 @@ type Store interface {
 	TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error)
 }
 
-//store provides all functions to execute db queries and transactions
+// store provides all functions to execute db queries and transactions
 type SQLStore struct {
 	*Queries
 	db *sql.DB
@@ -60,7 +60,7 @@ type TransferTxResult struct {
 	ToEntry     Entry    `json:"to_entry"`
 }
 
-//TransferTx performs a money transfer from one account to other
+// TransferTx performs a money transfer from one account to other
 // It creates a transfer record, add account entries, update accounts balance with single database transsaction
 func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
 	var result TransferTxResult
@@ -98,7 +98,7 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 			result.FromAccount, result.ToAccount, err = addMoney(ctx, q, arg.FromAccountID, -arg.Amount, arg.ToAccountID, arg.Amount)
 
 		} else {
-			
+
 			result.ToAccount, result.FromAccount, err = addMoney(ctx, q, arg.ToAccountID, arg.Amount, arg.FromAccountID, -arg.Amount)
 
 		}
