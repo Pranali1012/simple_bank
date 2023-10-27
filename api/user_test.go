@@ -49,7 +49,7 @@ func EqCreateUserParams(arg db.CreateUserParams, password string) gomock.Matcher
 }
 
 func TestCreateUserAPI(t *testing.T) {
-	user, password := randomUser(t) 
+	user, password := randomUser(t)
 
 	testCases := []struct {
 		name          string
@@ -220,7 +220,8 @@ func requireBodyMatchUser(t *testing.T, body *bytes.Buffer, user db.User) {
 
 	require.NoError(t, err)
 	require.Equal(t, user.Username, gotUser.Username)
+	require.Empty(t, gotUser.HashedPassword)
 	require.Equal(t, user.FullName, gotUser.FullName)
 	require.Equal(t, user.Email, gotUser.Email)
-	require.Empty(t, gotUser.HashedPassword)
+
 }
